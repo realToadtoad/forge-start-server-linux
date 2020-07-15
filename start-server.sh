@@ -66,6 +66,7 @@ done
 
 if [ $h == y ]; then
   base64 -d <<<"H4sIAAAAAAAAA21STU/kMAy991f4uCsm6REJiQMgkJAYQMNwQnvwNO40bCaO4nRY5tdv3M4u7EelSont9/z84mfBLZ2BbaVgLkYo7ylbGeDl4XF9+3D/zVrbPGkOlj5Sl7EvMFcBRgddJiwEG+y+j0ksfLlar+5OrqAwdIGFjrX2a9MAmGEBxgwUEvzvc15SwHfgVDxHUYAoQHBP5hj8A6AJGIXcL4i2Reh9ID3VDKCAox7HUJQuKl1kM8v9u/+bDwEil+M0UAaCN87BTYyTnh3cPy8vr1fKs6Mtbt4Lyfkcq3qoTKA47jbVH+7hd41eVhdLlZUy772jDz+V+BVubu+ulfYV87mePyvTSaZYhecxfkAXOiCnxGpCTWr3UB9ECtxw3hJU76U6Az2P9bV8nCp6Do6ytj1ox55zR+bg/zFE22rYRymETmc4PVR/OUPHu5RJlHsBuU6ZXbVIwM8lXiYQhkCuaS7n7QDMNL3ZJNW2x6Vpm2YoJclZ2259GcaNreRt3auwZnSl/m2vs5jPK2qCj+OP5ifw9L4IvwIAAA==" | gunzip
+  printf "\n"
   exit 0
 fi
 
@@ -81,8 +82,12 @@ if [ $n != y ]; then
     SEVENZ_INSTALLED=0
   fi
 fi
-
-FORGE="$(ls -r | grep forge.*universal\.jar | head -n 1)"
+if [ $(ls -r | grep forge.*universal\.jar | wc -l) == 0 ]; then
+    echo "Error: no Forge instances found. Use -j to specify a jar."
+    exit 5
+  fi
+TEMP_FORGE="$(ls -r | grep forge.*universal\.jar)"
+FORGE="$(echo $TEMP_FORGE | head -n 1)"
 
 if [ $jarLoc != "-" ]; then
   if [ ${jarLoc: -4} != ".jar" ]; then
