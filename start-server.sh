@@ -129,7 +129,7 @@ exit_stuff() {
 
   if [ $s == "y" ]; then
     echo "Saving settings..."
-    printf "$n\n$mB\n$jarLoc" > start-server-settings.txt
+    printf "$n\n$mB\n$jarLoc\n$zip" > start-server-settings.txt
   fi
   
   printf "\nExiting..."
